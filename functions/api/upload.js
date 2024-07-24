@@ -14,8 +14,11 @@ export async function onRequestPost(context) {
     const result = await response.json()
 
     if (result && result[0] && result[0].src && albumName) {
-        await context.env.telegraph_image_album.put(albumName, '', {})
-        await context.env.telegraph_image_url.put(albumName + '_' + result[0].src, '', {})
+        await context.env.telegraph_image_album.put(albumName, '')
+        await context.env.telegraph_image_url.put(albumName + '_' + result[0].src, '')
     }
-    return response
+
+    return new Response(JSON.stringify(result), {
+        headers: { 'content-type': 'application/json' }
+    })
 }
