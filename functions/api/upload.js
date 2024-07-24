@@ -24,7 +24,7 @@ export async function onRequestPost(context) {  // Contents of context object
     console.log("data")
     console.log(data)
     const info = JSON.stringify({
-
+        text: await response.json(),
         headers: response.headers,
 
 
