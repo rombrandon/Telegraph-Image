@@ -40,7 +40,7 @@ export async function onRequestPost(context) {  // Contents of context object
     // }
 
     const req = request.clone()
-    req.headers.delete('content-type')
+    // req.headers.delete('content-type')
 
     const response = await fetch('https://telegra.ph/upload', {
         method: req.method,
