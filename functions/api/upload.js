@@ -35,7 +35,7 @@ export async function onRequestPost(context) {  // Contents of context object
     const result = await response.json()
 
     // 相册
-    const albumName = request.headers.get('x-album-name')
+    const albumName = formData.get('x-album-name')
     await env.telegraph_image_album.put(albumName, '', {})
 
     // telegraph_image_album
