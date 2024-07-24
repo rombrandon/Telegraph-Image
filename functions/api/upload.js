@@ -42,8 +42,8 @@ export async function onRequestPost(context) {  // Contents of context object
 
 
     const response = await fetch('https://telegra.ph/upload', {
-        method: request.method,
-        headers: request.headers,
+        method: request.clone().method,
+        headers: request.clone().headers,
         body: request.clone().body,
     });
 
