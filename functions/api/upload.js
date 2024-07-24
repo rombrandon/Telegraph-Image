@@ -17,6 +17,12 @@ export async function onRequestPost(context) {  // Contents of context object
     // return response
     const albumName = req.headers.get('x-album-name')
 
+    console.log("request")
+    console.log(request)
+    console.log("params")
+    console.log(params)
+    console.log("data")
+    console.log(data)
     const info = JSON.stringify({
         albumName,
         type: typeof response,
