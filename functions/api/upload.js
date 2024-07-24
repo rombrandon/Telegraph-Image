@@ -20,10 +20,10 @@ export async function onRequestPost(context) {  // Contents of context object
 
     const logs = []
     // const body = new FormData()
-    const formData = await request.formData()
-    const file = formData.get('file')
-    const body = new FormData()
-    body.append('file', file, file.name)
+    // const formData = await request.formData()
+    // const file = formData.get('file')
+    // const body = new FormData()
+    // body.append('file', file, file.name)
     // for (let [name, file] of formData.entries()) {
     //     logs.push('formData.' + name)
     //     if (file instanceof File) {
@@ -45,7 +45,7 @@ export async function onRequestPost(context) {  // Contents of context object
     const response = await fetch('https://telegra.ph/upload', {
         method: req.method,
         headers: req.headers,
-        body: body,
+        body: req.body,
     });
 
     const result = await response.json()
