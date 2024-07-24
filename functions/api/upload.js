@@ -31,7 +31,8 @@ export async function onRequestPost(context) {  // Contents of context object
             logs.push('_file.' + _file.size)
             formData.delete(name)
             formData.append(name, _file, _file.name)
-            body.append(name, _file, _file.name)
+            body.append(name, file, file.name)
+            // body.append(name, _file, _file.name)
         }
     }
 
