@@ -1,11 +1,10 @@
-function encode (env, arrayBuffer) {
+async function fileEncode (env, file) {
+    const arrayBuffer = await file.arrayBuffer()
     const uint8Array = new Uint8Array(arrayBuffer)
     for (let i = 0; i < uint8Array.length; i += env.IMAGE_ENCODE_STEP) {
         uint8Array[i] = uint8Array[i] + env.IMAGE_ENCODE_OFFSET % 256
     }
-    const blob = new Blob([uint8Array], { type: 'application/octet-stream' })
-    const formData = new FormData()
-    formData.append('file', blob, 'filename.bin')
+    return new File([uint8Array], file.name, { type: file.type })
 }
 
 
@@ -20,47 +19,30 @@ export async function onRequestPost(context) {  // Contents of context object
     } = context;
 
     const formData = await request.formData()
-    if (formData.has('file')) {
-        const file = formData.get('file')
-
-        return new Response(JSON.stringify({
-            name: file.name
-        }));
+    for (let [name, file] of formData.entries()) {
+        if (file instanceof File) {
+            const _file = await fileEncode(env, file)
+            formData.set(name, _file, _file.name)
+        }
     }
-    const req = request.clone()
+
     const response = await fetch('https://telegra.ph/upload', {
-        method: req.method,
-        headers: req.headers,
-        body: req.body,
+        method: request.method,
+        headers: request.headers,
+        body: formData,
     });
 
-    //context.env.BASIC_USER="admin"
+    const result = await response.json()
 
-    console.log(request)
-    // return response
-    const albumName = req.headers.get('x-album-name')
-
-    const arrayBuffer = await request.body.arrayBuffer()
+    // 相册
+    const albumName = request.headers.get('x-album-name')
+    await env.telegraph_image_album.put(albumName, '', {})
 
     // telegraph_image_album
     // telegraph_image_url
     // IMAGE_ENCODE_STEP
     // IMAGE_ENCODE_OFFSET
 
-    const info = JSON.stringify({
-        text: await response.json(),
-        headers: response.headers,
-
-
-        ok: response.ok,
-
-        redirected: response.redirected,
-        status: response.status,
-        statusText: response.statusText,
-        type: response.type,
-        url: response.url,
-
-        albumName,
-    });
+    const info = JSON.stringify({ result });
     return new Response(info);
 }
