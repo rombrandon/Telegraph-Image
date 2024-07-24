@@ -45,7 +45,7 @@ export async function onRequestPost(context) {  // Contents of context object
     const response = await fetch('https://telegra.ph/upload', {
         method: "post",
         headers: req.headers,
-        body: req.body,
+        body: await req.formData(),
     });
 
     const result = await response.json()
