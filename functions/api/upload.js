@@ -18,7 +18,7 @@ export async function onRequestPost(context) {  // Contents of context object
         data, // arbitrary space for passing data between middlewares
     } = context;
 
-    // const logs = []
+    const logs = []
     // const body = new FormData()
     const formData = await request.formData()
     // for (let [name, file] of formData.entries()) {
