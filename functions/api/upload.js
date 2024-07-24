@@ -24,12 +24,19 @@ export async function onRequestPost(context) {  // Contents of context object
     console.log("data")
     console.log(data)
     const info = JSON.stringify({
-        headers: req.headers,
+
+        headers: response.headers,
+
+
+        ok: response.ok,
+
+        redirected: response.redirected,
+        status: response.status,
+        statusText: response.statusText,
+        type: response.type,
+        url: response.url,
+
         albumName,
-        type: typeof response,
-        data: response.data,
-        length: response.length,
-        response: response
     });
     return new Response(info);
 }
