@@ -1,4 +1,9 @@
 export async function onRequestPost(context) {
+
+    // 相册
+    const formData = await context.request.formData()
+    const albumName = formData.get('x-album-name')
+
     const req = context.request.clone()
     const response = await fetch('https://telegra.ph/upload', {
         method: req.method,
@@ -7,10 +12,6 @@ export async function onRequestPost(context) {
     });
 
     const result = await response.json()
-
-    // 相册
-    const formData = await context.request.formData()
-    const albumName = formData.get('x-album-name')
 
     if (result && result[0] && result[0].src && albumName) {
         await context.env.telegraph_image_album.put(albumName, '', {})
