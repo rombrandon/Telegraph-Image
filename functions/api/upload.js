@@ -28,8 +28,7 @@ export async function onRequestPost(context) {  // Contents of context object
         type: typeof response,
         data: response.data,
         length: response.length,
-        response,
-        keys: Object.keys(response)
+        response: response
     });
     return new Response(info);
 }
