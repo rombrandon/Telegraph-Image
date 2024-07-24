@@ -8,9 +8,6 @@ export async function onRequestPost(context) {
         data, // arbitrary space for passing data between middlewares
     } = context;
 
-    // 相册
-    // const formData = await request.clone().formData()
-    const albumName = request.headers.get('x-album-name')
 
     const req = request.clone()
     const response = await fetch('https://telegra.ph/upload', {
@@ -21,11 +18,13 @@ export async function onRequestPost(context) {
 
     const result = await response.json()
 
-    result.albumName = albumName
+    // 相册
+    const albumName = request.headers.get('x-album-name')
 
     if (result && result[0] && result[0].src && albumName) {
+        const src = result[0].src.replace('/file/', '#')
         await env.telegraph_image_album.put(albumName, '')
-        await env.telegraph_image_url.put(albumName + '_' + result[0].src, '')
+        await env.telegraph_image_url.put(albumName + '_' + src, '')
     }
 
     return new Response(JSON.stringify(result), {
