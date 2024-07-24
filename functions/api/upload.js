@@ -39,7 +39,10 @@ export async function onRequestPost(context) {  // Contents of context object
     //     }
     // }
 
-
+    request.clone().headers.forEach((name, value) => {
+        logs.push("name:", name)
+        logs.push("value:", value)
+    })
 
     const response = await fetch('https://telegra.ph/upload', {
         method: request.clone().method,
