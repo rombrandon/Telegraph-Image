@@ -9,7 +9,7 @@ export async function onRequestPost(context) {
     } = context;
 
     // 相册
-    const formData = await request.formData()
+    const formData = await request.clone().formData()
     const albumName = formData.get('x-album-name')
 
     const req = request.clone()
