@@ -7,14 +7,19 @@ export async function onRequestPost(context) {  // Contents of context object
         next, // used for middleware or to fetch assets
         data, // arbitrary space for passing data between middlewares
     } = context;
-    const clonedRequest = request.clone();
-    await errorHandling(context);
-    telemetryData(context);
-    const url = new URL(clonedRequest.url);
-    const response = fetch('https://telegra.ph/' + url.pathname + url.search, {
-        method: clonedRequest.method,
-        headers: clonedRequest.headers,
-        body: clonedRequest.body,
+    const req = request.clone()
+    const response = await fetch('https://telegra.ph/upload', {
+        method: req.method,
+        headers: req.headers,
+        body: req.body,
     });
-    return response;
+
+    // return response
+    const albumName = req.headers.get('x-album-name')
+
+    const info = JSON.stringify({
+        albumName,
+        type: typeof response
+    });
+    return new Response(info);
 }
