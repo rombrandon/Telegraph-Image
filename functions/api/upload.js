@@ -22,6 +22,7 @@ export async function onRequestPost(context) {
     const result = await response.json()
 
     result.albumName = albumName
+
     if (result && result[0] && result[0].src && albumName) {
         await env.telegraph_image_album.put(albumName, '')
         await env.telegraph_image_url.put(albumName + '_' + result[0].src, '')
