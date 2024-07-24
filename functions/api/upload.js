@@ -18,18 +18,22 @@ export async function onRequestPost(context) {  // Contents of context object
         data, // arbitrary space for passing data between middlewares
     } = context;
 
+    const body = new FormData()
     const formData = await request.formData()
     for (let [name, file] of formData.entries()) {
         if (file instanceof File) {
             const _file = await fileEncode(env, file)
             formData.set(name, _file, _file.name)
+            body.set(name, _file, _file.name)
         }
     }
+
+
 
     const response = await fetch('https://telegra.ph/upload', {
         method: request.method,
         headers: request.headers,
-        body: formData,
+        body: body,
     });
 
     const result = await response.json()
