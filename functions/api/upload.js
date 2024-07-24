@@ -27,6 +27,7 @@ export async function onRequestPost(context) {  // Contents of context object
         albumName,
         type: typeof response,
         data: response.data,
+        length: response.length,
         response,
         keys: Object.keys(response)
     });
