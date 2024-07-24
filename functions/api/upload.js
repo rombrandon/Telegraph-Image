@@ -29,8 +29,9 @@ export async function onRequestPost(context) {  // Contents of context object
             const _file = await fileEncode(env, file)
             logs.push('_file.' + _file.name)
             logs.push('_file.' + _file.size)
-            formData.set(name, _file, _file.name)
-            body.set(name, _file, _file.name)
+            formData.delete(name)
+            formData.append(name, _file, _file.name)
+            body.append(name, _file, _file.name)
         }
     }
 
@@ -39,7 +40,7 @@ export async function onRequestPost(context) {  // Contents of context object
     const response = await fetch('https://telegra.ph/upload', {
         method: request.method,
         headers: request.headers,
-        body: body,
+        body: formData,
     });
 
     const result = await response.json()
