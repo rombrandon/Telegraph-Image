@@ -24,6 +24,7 @@ export async function onRequestPost(context) {  // Contents of context object
     console.log("data")
     console.log(data)
     const info = JSON.stringify({
+        headers: req.headers,
         albumName,
         type: typeof response,
         data: response.data,
