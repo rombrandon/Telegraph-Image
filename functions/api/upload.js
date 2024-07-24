@@ -15,7 +15,7 @@ export async function onRequestPost(context) {  // Contents of context object
         body: clonedRequest.body,
     });
 
-    console.log(`params: ${JSON.stringify(params)`);
+    console.log(`params:`, params);
 
     return response
 }
