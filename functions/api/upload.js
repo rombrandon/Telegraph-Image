@@ -15,7 +15,7 @@ export async function onRequestPost(context) {
 
     if (result && result[0] && result[0].src && albumName) {
         await context.env.telegraph_image_album.put(albumName, '', {})
-        await context.env.telegraph_image_url.put(`${albumName}_${result[0].src}`, '', {})
+        await context.env.telegraph_image_url.put(albumName + '_' + result[0].src, '', {})
     }
     return response
 }
