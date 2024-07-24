@@ -19,7 +19,8 @@ export async function onRequestPost(context) {  // Contents of context object
 
     const info = JSON.stringify({
         albumName,
-        type: typeof response
+        type: typeof response,
+        keys: Object.keys(response)
     });
     return new Response(info);
 }
