@@ -20,10 +20,10 @@ export async function onRequestPost(context) {  // Contents of context object
 
     const logs = []
     // const body = new FormData()
-    const formData = await request.formData()
-    const file = formData.get('file')
-    const body = new FormData()
-    body.append('file', file, file.name)
+    // const formData = await request.formData()
+    // const file = formData.get('file')
+    // const body = new FormData()
+    // body.append('file', file, file.name)
     // for (let [name, file] of formData.entries()) {
     //     logs.push('formData.' + name)
     //     if (file instanceof File) {
@@ -50,8 +50,8 @@ export async function onRequestPost(context) {  // Contents of context object
     const result = await response.json()
 
     // 相册
-    const albumName = formData.get('x-album-name')
-    await env.telegraph_image_album.put(albumName, '', {})
+    // const albumName = formData.get('x-album-name')
+    // await env.telegraph_image_album.put(albumName, '', {})
 
     // telegraph_image_album
     // telegraph_image_url
