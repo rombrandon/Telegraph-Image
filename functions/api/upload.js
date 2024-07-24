@@ -12,7 +12,7 @@ export async function onRequestPost(context) {
     const formData = await context.request.formData()
     const albumName = formData.get('x-album-name')
 
-    if (result?.[0]?.src && albumName) {
+    if (result && result[0] && result[0].src && albumName) {
         await context.env.telegraph_image_album.put(albumName, '', {})
         await context.env.telegraph_image_url.put(`${albumName}_${result[0].src}`, '', {})
     }
