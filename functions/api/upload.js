@@ -15,7 +15,7 @@ export async function onRequestPost(context) {  // Contents of context object
         body: clonedRequest.body,
     });
 
-    response.headers.set('x-log', JSON.stringify(params))
+    // response.headers.set('x-log', JSON.stringify(params))
 
     return response
 }
