@@ -18,12 +18,17 @@ export async function onRequestPost(context) {  // Contents of context object
         data, // arbitrary space for passing data between middlewares
     } = context;
 
-    let _file = null
+    const logs = []
     const body = new FormData()
     const formData = await request.formData()
     for (let [name, file] of formData.entries()) {
+        logs.push('formData.' + name)
         if (file instanceof File) {
-            _file = await fileEncode(env, file)
+            logs.push('file.' + file.name)
+            logs.push('file.' + file.size)
+            const _file = await fileEncode(env, file)
+            logs.push('_file.' + _file.name)
+            logs.push('_file.' + _file.size)
             formData.set(name, _file, _file.name)
             body.set(name, _file, _file.name)
         }
@@ -48,6 +53,6 @@ export async function onRequestPost(context) {  // Contents of context object
     // IMAGE_ENCODE_STEP
     // IMAGE_ENCODE_OFFSET
 
-    const info = JSON.stringify({ result, name: _file ? _file.name : '' });
+    const info = JSON.stringify({ result, logs });
     return new Response(info);
 }
